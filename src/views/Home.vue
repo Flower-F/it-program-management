@@ -89,7 +89,6 @@
             </el-card>
             <el-card shadow="hover" class="timeline-map-part" id="header4">
               <h4>疫情时间线预测地图</h4>
-              <div class="subtitle">图示为2020-01-19广东的疫情地图</div>
               <div class="map-wrapper">
                 <iframe
                   src="static/timeline_map.html"
@@ -326,12 +325,8 @@ export default defineComponent({
           }
           .timeline-map-part {
             margin-top: 10px;
-            .subtitle {
-              font-size: 14px;
-              color: #999;
-              margin: 5px 0;
-            }
             .map-wrapper {
+              margin-top: 10px;
               position: relative;
               width: 100%;
               height: 580px;
