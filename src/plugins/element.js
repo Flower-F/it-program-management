@@ -11,7 +11,16 @@ import {
   ElMenu,
   ElMenuItem,
   ElMenuItemGroup,
-  ElAffix
+  ElAffix,
+  ElForm,
+  ElFormItem,
+  ElInput,
+  ElSelect,
+  ElInputNumber,
+  ElOption,
+  ElLoading,
+  ElTooltip,
+  ElIcon
 } from 'element-plus'
 
 export default (app) => {
@@ -28,4 +37,13 @@ export default (app) => {
   app.use(ElMenu)
   app.use(ElMenuItem)
   app.use(ElAffix)
+  app.use(ElForm)
+  app.use(ElFormItem)
+  app.use(ElInput)
+  app.use(ElSelect)
+  app.use(ElInputNumber)
+  app.use(ElOption)
+  app.use(ElLoading)
+  app.use(ElTooltip)
+  app.use(ElIcon)
 }

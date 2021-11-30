@@ -83,20 +83,39 @@
                 ></iframe>
               </div>
             </el-card>
-            <el-card shadow="hover" class="line-part" id="header3">
-              <h4>广东省近期新增人数趋势图</h4>
-              <v-chart class="chart" :option="option" />
-            </el-card>
-            <el-card shadow="hover" class="timeline-map-part" id="header4">
-              <h4>疫情时间线预测地图</h4>
-              <div class="map-wrapper">
-                <iframe
-                  src="static/timeline_map.html"
-                  frameborder="0"
-                  class="map"
-                  scrolling="no"
-                ></iframe>
+            <prediction v-if="checked"></prediction>
+            <input-form v-else @changeChecked="changeChecked"></input-form>
+            <el-card
+              shadow="hover"
+              v-if="checked"
+              class="comment-part"
+              id="heading5"
+            >
+              <h4>疫情扩散情况评价</h4>
+              <div class="comment">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
               </div>
+              <el-button type="primary" class="download">
+                <a href="/static/mockData.doc" download="疫情扩散情况评价.doc">
+                  下载评价情况
+                </a>
+                <el-icon class="el-icon--right">
+                  <Download />
+                </el-icon>
+              </el-button>
             </el-card>
           </el-main>
           <el-footer class="footer">
@@ -112,11 +131,26 @@
               <el-menu-item index="2" @click="returnTop(2)">
                 <span class="menu-item">预测地图</span>
               </el-menu-item>
-              <el-menu-item index="3" @click="returnTop(3)">
+              <el-menu-item
+                index="3"
+                @click="returnTop(3)"
+                :disabled="!checked"
+              >
                 <span class="menu-item">新增趋势</span>
               </el-menu-item>
-              <el-menu-item index="4" @click="returnTop(4)">
+              <el-menu-item
+                index="4"
+                @click="returnTop(4)"
+                :disabled="!checked"
+              >
                 <span class="menu-item">预测时间线</span>
+              </el-menu-item>
+              <el-menu-item
+                index="5"
+                @click="returnTop(5)"
+                :disabled="!checked"
+              >
+                <span class="menu-item">扩散情况评价</span>
               </el-menu-item>
             </el-menu>
           </el-affix>
@@ -128,99 +162,32 @@
 
 <script>
 // @ is an alias to /src
-import { use } from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { LineChart } from "echarts/charts";
-import {
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  GridComponent,
-} from "echarts/components";
-import { ref, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import Increment from "../components/Increment.vue";
-
-use([
-  CanvasRenderer,
-  TitleComponent,
-  GridComponent,
-  TooltipComponent,
-  LegendComponent,
-  LineChart,
-]);
+import InputForm from "../components/InputForm.vue";
+import Prediction from "../components/Prediction.vue";
+import { Download } from "@element-plus/icons";
 
 export default defineComponent({
   name: "Home",
   components: {
     Increment,
+    Prediction,
+    InputForm,
+    Download,
   },
   data() {
     return {
-      titles: [],
+      checked: false,
     };
   },
   methods: {
-    returnTop: function (index) {
+    returnTop(index) {
       document.querySelector("#header" + index).scrollIntoView(true);
     },
-  },
-  setup() {
-    const option = ref({
-      xAxis: {
-        type: "category",
-        data: [
-          "11-20",
-          "11-21",
-          "11-22",
-          "11-23",
-          "11-24",
-          "11-25",
-          "11-26",
-          "11-27",
-          "11-28",
-          "11-29",
-          "11-30",
-          "12-01",
-          "12-02",
-          "12-03",
-          "12-04",
-          "12-05",
-          "12-06",
-          "12-07",
-        ],
-      },
-      yAxis: {
-        type: "value",
-      },
-      tooltip: {
-        show: true,
-        trigger: "item",
-        triggerOn: "mousemove|click",
-        axisPointer: {
-          type: "line",
-        },
-        showContent: true,
-        alwaysShowContent: false,
-        showDelay: 0,
-        hideDelay: 100,
-        textStyle: {
-          fontSize: 16,
-        },
-        borderWidth: 0,
-        padding: 5,
-      },
-      series: [
-        {
-          data: [
-            32, 34, 38, 40, 46, 50, 55, 60, 55, 60, 56, 52, 46, 44, 40, 36, 32,
-            26,
-          ],
-          type: "line",
-          smooth: true,
-        },
-      ],
-    });
-    return { option };
+    changeChecked() {
+      this.checked = true;
+    },
   },
 });
 </script>
@@ -228,7 +195,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .home {
   width: 100%;
-  height: 1200px;
+  height: 100%;
+  /* height: 1200px; */
+  /* height: 2660px; */
 
   .container {
     width: 100%;
@@ -240,10 +209,10 @@ export default defineComponent({
       /* background: rgb(198, 226, 255); */
       margin: 10px 20px 0px 20px;
       border-radius: 5px;
-      font-size: 24px;
+      font-size: 30px;
       font-weight: 700;
-      line-height: 80px;
-      height: 80px;
+      line-height: 50px;
+      height: 50px;
     }
 
     .body-container {
@@ -315,28 +284,21 @@ export default defineComponent({
               }
             }
           }
-          .line-part {
+          .comment-part {
             margin-top: 10px;
-            height: 650px;
-            .chart {
-              height: 600px;
-              width: 950px;
-            }
-          }
-          .timeline-map-part {
-            margin-top: 10px;
-            .map-wrapper {
+            line-height: 1.5;
+            .comment {
               margin-top: 10px;
-              position: relative;
-              width: 100%;
-              height: 580px;
-              .map {
-                position: absolute;
-                left: 60px;
-                top: 30px;
-                transform: scale(1.1);
-                width: 100%;
-                height: 640px;
+            }
+            .download {
+              float: right;
+              margin: 10px 0;
+              a {
+                text-decoration: none;
+                color: #ffffff;
+                &:hover {
+                  color: #ffffff;
+                }
               }
             }
           }
@@ -357,14 +319,5 @@ export default defineComponent({
       }
     }
   }
-
-  /* .map-wrapper {
-    width: 400px;
-    height: 300px;
-
-    .map {
-      transform: scale(0.7);
-    }
-  } */
 }
 </style>

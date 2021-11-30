@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 html,
 body,
 #app {
@@ -22,4 +22,5 @@ body,
   margin: 0;
   padding: 0;
 }
+
 </style>
