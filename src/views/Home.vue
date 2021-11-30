@@ -89,7 +89,7 @@
               shadow="hover"
               v-if="checked"
               class="comment-part"
-              id="heading5"
+              id="header5"
             >
               <h4>疫情扩散情况评价</h4>
               <div class="comment">
@@ -109,7 +109,7 @@
                 sunt in culpa qui officia deserunt mollit anim id est laborum.
               </div>
               <el-button type="primary" class="download">
-                <a href="/static/mockData.doc" download="疫情扩散情况评价.doc">
+                <a href="/static/疫情扩散情况评价.doc" download="疫情扩散情况评价.doc">
                   下载评价情况
                 </a>
                 <el-icon class="el-icon--right">
